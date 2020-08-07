@@ -2,5 +2,8 @@
   "root": true,
   "extends": [
     "./node_modules/@jupiterone/integration-sdk-dev-tools/config/eslint.json"
-  ]
+  ],
+  "rules": {
+    "prefer-const": "off"
+  }
 }

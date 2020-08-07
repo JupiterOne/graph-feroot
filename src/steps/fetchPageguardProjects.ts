@@ -8,23 +8,27 @@ import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-something',
-  name: 'Fetch something',
-  types: ['my_integration_something'],
+  id: 'fetch-pageguard-projects',
+  name: 'Fetch Pageguard Projects',
+  types: ['feroot_pageguard_project'],
   async executionHandler({
     instance,
     jobState,
   }: IntegrationStepExecutionContext<IntegrationConfig>) {
     const apiClient = createAPIClient(instance.config);
 
-    await apiClient.iterateSomething(async (something) => {
+    await apiClient.getPageguardProjects(async (project) => {
       await jobState.addEntity(
         createIntegrationEntity({
           entityData: {
-            source: something,
+            source: project,
             assign: {
-              _type: 'my-integration-something',
-              _class: 'Record',
+              _type: 'feroot_pageguard_project',
+              _class: 'Project',
+              _key: `pg:${project.uuid}`,
+              displayName: project.name,
+              activatedAt: project.activatedAt,
+              active: !!project.activatedAt,
             },
           },
         }),
