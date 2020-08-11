@@ -38,6 +38,7 @@
     "@types/request-promise-native": "^1.0.17",
     "@types/urijs": "^1.19.9",
     "axios": "^0.19.2",
+    "lodash": "^4.17.19",
     "request-promise-native": "^1.0.9",
     "urijs": "^1.19.2"
   }

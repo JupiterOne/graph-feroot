@@ -20,4 +20,9 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
    * from the graph
    */
   includeResolvedAlerts?: boolean;
+
+  /**
+   * Custom feroot base url for testing purposes
+   */
+  ferootBaseUrl?: string;
 }

@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://app.feroot.test';
+const FEROOT_BASE_URL = 'https://app.feroot.com';
 
 import { IntegrationProviderAuthenticationError } from '@jupiterone/integration-sdk-core';
 
@@ -27,13 +27,16 @@ export type AlertsFilter = {
  */
 export class APIClient {
   private _config: IntegrationConfig;
+  private _baseUrl: string;
 
   constructor(readonly config: IntegrationConfig) {
     this._config = config;
+    this._baseUrl =
+      config.ferootBaseUrl || process.env.FEROOT_BASE_URL || FEROOT_BASE_URL;
   }
 
   private async getData<T>(path: string, args?: object): Promise<T> {
-    const url = `${API_BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+    const url = `${this._baseUrl}${path.startsWith('/') ? '' : '/'}${path}`;
     try {
       const { data } = await axios.get(url, {
         headers: {
