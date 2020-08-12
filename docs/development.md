@@ -21,11 +21,14 @@ No extra prerequisites required than covered in the [README](../README.md) file.
 ## Provider account setup
 
 To create an account in Feroot just sign up on
-[feroot.com](https://www.feroot.com). To create an API key go to `Settings` ->
-`Account` -> `Developer` and click `Create new API key`. The new item will be
-added to `List of API keys` table. Click on `Reveal API key` and copy the key to
-use in the integration.
-[TODO: describe process involving J1 integration settings in Feroot app]()
+[feroot.com](https://www.feroot.com). To get access to the API Key management
+functionality the `PRO` plan subscription is required. You can start a free
+trial of `PRO` plan by clicking on `Start PRO trial` link in your account.
+
+To create an API key go to `Settings` -> `Account` -> `Developer` and click
+`Create new API key`. Select `Admin Read-only` role for the new key. The new
+item will be added to `List of API keys` table. Click on `Reveal API key` and
+copy the key to use in the integration.
 
 ## Authentication and configuration
 
