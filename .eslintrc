@@ -2,5 +2,11 @@
   "root": true,
   "extends": [
     "./node_modules/@jupiterone/integration-sdk-dev-tools/config/eslint.json"
-  ]
+  ],
+  "rules": {
+    "prefer-const": "off",
+    "eol-last": ["warn"],
+    "@typescript-eslint/semi": ["warn"],
+    "quotes": ["warn", "single", {"avoidEscape": true, "allowTemplateLiterals": true}]
+  }
 }

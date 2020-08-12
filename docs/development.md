@@ -1,28 +1,41 @@
 # Development
 
-Add details here to give a brief overview of how to work with the provider APIs.
-Please reference any SDKs or API docs used to help build the integration here.
+This integration uses API initially designated to use with Feroot Front End
+applications. By that reason there is no public API documentation for used
+endpoints. Nevertheless, here we briefly describe used API.
+
+Feroot API is a regular REST API operating with JSON data format. To access
+non-public endpoints each request should include `x-api-key` header containing
+Feroot API key (see **Provider account setup** section). Most of endpoints we
+use in this integration are `GET` endpoints providing a list of items. See
+`APIClient` class in [../src/client.ts](../src/client.ts) containing wrappers
+for all the API we use in this integration. Basically all the methods use a
+`getData` function helping to simplify requests to Feroot. Feroot types
+definition for data returning from the API are located in
+[../src/types-feroot.ts](../src/types-feroot.ts) file.
 
 ## Prerequisites
 
-Supply details about software or tooling (like maybe Docker or Terraform) that
-is needed for development here.
-
-Please supply references to documentation that details how to install those
-dependencies here.
-
-Tools like Node.js and NPM are already covered in the [README](../README.md) so
-don't bother documenting that here.
+No extra prerequisites required than covered in the [README](../README.md) file.
 
 ## Provider account setup
 
-Please provide information about the steps needed to create an account with a
-provider. Images and references to a provider's documentation is very helpful
-for new developers picking up your work.
+To create an account in Feroot just sign up on
+[feroot.com](https://www.feroot.com). To get access to the API Key management
+functionality the `PRO` plan subscription is required. You can start a free
+trial of `PRO` plan by clicking on `Start PRO trial` link in your account.
 
-## Authentication
+To create an API key go to `Settings` -> `Account` -> `Developer` and click
+`Create new API key`. Select `Admin Read-only` role for the new key. The new
+item will be added to `List of API keys` table. Click on `Reveal API key` and
+copy the key to use in the integration.
 
-Supply details here for information on how to authenticate with a provider so
-that developers have an idea of what's needed to hit APIs. It may be useful to
-provide explanations for each value specified in
-[../src/instanceConfigFields.json](../src/instanceConfigFields.json).
+## Authentication and configuration
+
+To authentificate requests to Feroot an API Key with administrative access is
+required. This key should be provided in `ferootApiKey` configuration field. See
+the section above for the instruction of how to obtain the key.
+
+See [../src/instanceConfigFields.ts](../src/instanceConfigFields.ts) and
+[../src/types.ts](../src/types.ts) for the latest version of configuration
+parameters.

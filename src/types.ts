@@ -6,12 +6,23 @@ import { IntegrationInstanceConfig } from '@jupiterone/integration-sdk-core';
  */
 export interface IntegrationConfig extends IntegrationInstanceConfig {
   /**
-   * The provider API client ID used to authenticate requests.
+   * The provider API key used to authenticate requests.
    */
-  clientId: string;
+  ferootApiKey: string;
 
   /**
-   * The provider API client secret used to authenticate requests.
+   * Indicates whether monitoring hosts should be created if not present in J1 workspace
    */
-  clientSecret: string;
+  createTargetHosts?: boolean;
+
+  /**
+   * Indicates whether to preserve entities for resolved alerts or to remove all resolved alerts
+   * from the graph
+   */
+  includeResolvedAlerts?: boolean;
+
+  /**
+   * Custom feroot base url for testing purposes
+   */
+  ferootBaseUrl?: string;
 }
