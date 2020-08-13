@@ -30,7 +30,7 @@ The following entity resources are ingested when the integration runs:
 | Project Folder                      | `feroot_project_folder`    | `Group`               |
 | Inspector Project                   | `feroot_project`           | `Project`             |
 | PageGuard Project                   | `feroot_pageguard_project` | `Project`             |
-| Alert                               | `feroot_alert`             | `Incident`            |
+| Alert                               | `feroot_alert`             | `Finding`             |
 | Target Host [\*](#target-host-note) | `host`                     | `Host`                |
 
 <a name="target-host-note">\*</a>`Target Host` entities are generated only if
@@ -46,5 +46,5 @@ The following relationships are created/mapped:
 | `feroot_user_group`     | **HAS**       | `feroot_project_folder`    |
 | `feroot_project`        | **MONITORS**  | `Host`                     |
 | `feroot_project_folder` | **HAS**       | `feroot_project`           |
-| `feroot_project`        | **INCLUDES**  | `feroot_pageguard_project` |
+| `feroot_project`        | **CONTAINS**  | `feroot_pageguard_project` |
 | `feroot_project`        | **GENERATED** | `feroot_alert`             |

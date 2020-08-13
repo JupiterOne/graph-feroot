@@ -59,9 +59,9 @@ const step: IntegrationStep<IntegrationConfig> = {
       await jobState.addRelationship(
         createIntegrationRelationship({
           _class: 'MONITORS',
-          _type: 'feroot_project_monitors_host',
           _mapping: {
             relationshipDirection: RelationshipDirection.FORWARD,
+            sourceEntityType: 'feroot_project',
             sourceEntityKey: project.uuid,
             targetFilterKeys: [['_class', 'hostname']],
             targetEntity: {
@@ -90,7 +90,7 @@ const step: IntegrationStep<IntegrationConfig> = {
       if (project.pageguardUuid) {
         await jobState.addRelationship(
           createIntegrationRelationship({
-            _class: 'INCLUDES',
+            _class: 'CONTAINS',
             fromKey: project.uuid,
             fromType: 'feroot_project',
             toKey: `pg:${project.pageguardUuid}`,

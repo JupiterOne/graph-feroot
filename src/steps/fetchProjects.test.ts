@@ -125,12 +125,12 @@ describe('Projects fetching', () => {
         displayName: 'HAS',
       },
       {
-        _key: 'uuid-2|includes|pg:pg-uuid-1',
-        _type: 'feroot_project_includes_pageguard_project',
-        _class: 'INCLUDES',
+        _key: 'uuid-2|contains|pg:pg-uuid-1',
+        _type: 'feroot_project_contains_pageguard_project',
+        _class: 'CONTAINS',
         _fromEntityKey: 'uuid-2',
         _toEntityKey: 'pg:pg-uuid-1',
-        displayName: 'INCLUDES',
+        displayName: 'CONTAINS',
       },
     ]);
   });

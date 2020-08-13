@@ -80,7 +80,7 @@ describe('Alerts fetching', () => {
       {
         id: 'abc',
         _type: 'feroot_alert',
-        _class: ['Incident'],
+        _class: ['Finding'],
         _key: 'abc',
         name: 'alert-type',
         category: 'Feroot Alert',
@@ -99,7 +99,7 @@ describe('Alerts fetching', () => {
       {
         id: 'abc2',
         _type: 'feroot_alert',
-        _class: ['Incident'],
+        _class: ['Finding'],
         _key: 'abc2',
         name: 'alert-type-2',
         category: 'Feroot Alert',
