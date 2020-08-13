@@ -59,18 +59,17 @@ const step: IntegrationStep<IntegrationConfig> = {
       await jobState.addRelationship(
         createIntegrationRelationship({
           _class: 'MONITORS',
+          _type: 'feroot_project_monitors_host',
           _mapping: {
             relationshipDirection: RelationshipDirection.FORWARD,
-            sourceEntityType: 'feroot_project',
             sourceEntityKey: project.uuid,
             targetFilterKeys: [['_class', 'hostname']],
             targetEntity: {
               _class: 'Host',
-              _type: 'host',
               hostname: hostname,
               displayName: hostname,
             },
-            skipTargetCreation: !instance.config.createTargetHosts,
+            skipTargetCreation: true,
           },
         }),
       );

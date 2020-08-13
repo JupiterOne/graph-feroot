@@ -28,16 +28,11 @@ describe('Projects fetching', () => {
       },
     ];
 
-    const { client, context } = createContextMocks(
-      <APIClient>{
-        async getProjects(iteratee) {
-          for (let item of items) await iteratee(item);
-        },
+    const { client, context } = createContextMocks(<APIClient>{
+      async getProjects(iteratee) {
+        for (let item of items) await iteratee(item);
       },
-      {
-        createTargetHosts: false,
-      },
-    );
+    });
 
     await step.executionHandler(context);
 
@@ -88,7 +83,6 @@ describe('Projects fetching', () => {
           targetFilterKeys: [['_class', 'hostname']],
           targetEntity: {
             _class: 'Host',
-            _type: 'host',
             hostname: 'www.feroot.com',
             displayName: 'www.feroot.com',
           },
@@ -107,7 +101,6 @@ describe('Projects fetching', () => {
           targetFilterKeys: [['_class', 'hostname']],
           targetEntity: {
             _class: 'Host',
-            _type: 'host',
             hostname: 'www.google.com',
             displayName: 'www.google.com',
           },
@@ -133,57 +126,6 @@ describe('Projects fetching', () => {
         _fromEntityKey: 'project-uuid-2',
         _toEntityKey: 'pg:pageguard-uuid-1',
         displayName: 'CONTAINS',
-      },
-    ]);
-  });
-
-  test('creates target hosts if configured', async () => {
-    let items: FerootProject[] = [
-      {
-        id: 'abc',
-        name: 'name-1',
-        serviceUuid: 'service-uuid-1',
-        status: 1,
-        urls: ['https://www.feroot.com'],
-        uuid: 'project-uuid-1',
-      },
-    ];
-
-    const { client, context } = createContextMocks(
-      <APIClient>{
-        async getProjects(iteratee) {
-          for (let item of items) await iteratee(item);
-        },
-      },
-      {
-        createTargetHosts: true,
-      },
-    );
-
-    await step.executionHandler(context);
-
-    expect(client.getProjects).toBeCalledTimes(1);
-
-    expect(context.jobState.collectedEntities.length).toBe(1);
-    expect(context.jobState.collectedRelationships).toMatchObject([
-      {
-        _class: 'MONITORS',
-        _mapping: {
-          relationshipDirection: 'FORWARD',
-          sourceEntityKey: 'project-uuid-1',
-          targetFilterKeys: [['_class', 'hostname']],
-          targetEntity: {
-            _class: 'Host',
-            _type: 'host',
-            hostname: 'www.feroot.com',
-            displayName: 'www.feroot.com',
-          },
-          skipTargetCreation: false,
-        },
-        displayName: 'MONITORS',
-        _key:
-          'project-uuid-1|monitors|FORWARD:_class=Host:hostname=www.feroot.com',
-        _type: 'feroot_project_monitors_host',
       },
     ]);
   });

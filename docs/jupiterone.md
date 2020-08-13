@@ -23,18 +23,14 @@ copy the key to use in the integration.
 
 The following entity resources are ingested when the integration runs:
 
-| Resources                           | \_type of the Entity       | \_class of the Entity |
-| ----------------------------------- | -------------------------- | --------------------- |
-| User                                | `feroot_user`              | `User`                |
-| User Group                          | `feroot_user_group`        | `UserGroup`           |
-| Project Folder                      | `feroot_project_folder`    | `Group`               |
-| Inspector Project                   | `feroot_project`           | `Project`             |
-| PageGuard Project                   | `feroot_pageguard_project` | `Project`             |
-| Alert                               | `feroot_alert`             | `Finding`             |
-| Target Host [\*](#target-host-note) | `host`                     | `Host`                |
-
-<a name="target-host-note">\*</a>`Target Host` entities are generated only if
-`createTargetHosts` configuration option is turned on.
+| Resources         | \_type of the Entity       | \_class of the Entity |
+| ----------------- | -------------------------- | --------------------- |
+| User              | `feroot_user`              | `User`                |
+| User Group        | `feroot_user_group`        | `UserGroup`           |
+| Project Folder    | `feroot_project_folder`    | `Group`               |
+| Inspector Project | `feroot_project`           | `Project`             |
+| PageGuard Project | `feroot_pageguard_project` | `Project`             |
+| Alert             | `feroot_alert`             | `Finding`             |
 
 ### Relationships
 
