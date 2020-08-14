@@ -36,7 +36,7 @@ const step: IntegrationStep<IntegrationConfig> = {
 
                 displayName: alert.title,
                 eventsCount: alert.eventsCount,
-                active: alert.state === 1,
+                open: alert.state === 1,
               },
             },
           }),

@@ -11,12 +11,12 @@ describe('User Groups fetching', () => {
       {
         id: 'abc',
         name: 'name-1',
-        uuid: 'uuid-1',
+        uuid: 'usergroup-uuid-1',
       },
       {
         id: 'abc-2',
         name: 'name-2',
-        uuid: 'uuid-2',
+        uuid: 'usergroup-uuid-2',
       },
     ];
 
@@ -36,7 +36,7 @@ describe('User Groups fetching', () => {
         name: 'name-1',
         _type: 'feroot_user_group',
         _class: ['UserGroup'],
-        _key: 'uuid-1',
+        _key: 'usergroup-uuid-1',
         displayName: 'name-1',
         _rawData: [
           {
@@ -50,7 +50,7 @@ describe('User Groups fetching', () => {
         name: 'name-2',
         _type: 'feroot_user_group',
         _class: ['UserGroup'],
-        _key: 'uuid-2',
+        _key: 'usergroup-uuid-2',
         displayName: 'name-2',
         _rawData: [
           {

@@ -11,20 +11,20 @@ describe('Projects fetching', () => {
       {
         id: 'abc',
         name: 'name-1',
-        serviceUuid: 'service-1',
+        serviceUuid: 'service-uuid-1',
         status: 1,
         urls: ['https://www.feroot.com', 'https://app.feroot.com'],
-        uuid: 'uuid-1',
+        uuid: 'project-uuid-1',
       },
       {
         id: 'abc-2',
         name: 'name-2',
-        serviceUuid: 'service-1',
+        serviceUuid: 'service-uuid-1',
         status: 3, // paused
         urls: ['https://www.google.com'],
-        uuid: 'uuid-2',
-        pageguardUuid: 'pg-uuid-1',
-        projectGroup: 'uuid-g1',
+        uuid: 'project-uuid-2',
+        pageguardUuid: 'pageguard-uuid-1',
+        projectGroup: 'group-uuid-1',
       },
     ];
 
@@ -50,7 +50,7 @@ describe('Projects fetching', () => {
         status: 'Active',
         _type: 'feroot_project',
         _class: ['Project'],
-        _key: 'uuid-1',
+        _key: 'project-uuid-1',
         displayName: 'name-1',
         active: true,
         urls: ['https://www.feroot.com', 'https://app.feroot.com'],
@@ -67,7 +67,7 @@ describe('Projects fetching', () => {
         status: 'Paused',
         _type: 'feroot_project',
         _class: ['Project'],
-        _key: 'uuid-2',
+        _key: 'project-uuid-2',
         displayName: 'name-2',
         active: false,
         urls: ['https://www.google.com'],
@@ -84,7 +84,7 @@ describe('Projects fetching', () => {
         _class: 'MONITORS',
         _mapping: {
           relationshipDirection: 'FORWARD',
-          sourceEntityKey: 'uuid-1',
+          sourceEntityKey: 'project-uuid-1',
           targetFilterKeys: [['_class', 'hostname']],
           targetEntity: {
             _class: 'Host',
@@ -95,14 +95,15 @@ describe('Projects fetching', () => {
           skipTargetCreation: true,
         },
         displayName: 'MONITORS',
-        _key: 'uuid-1|monitors|FORWARD:_class=Host:hostname=www.feroot.com',
+        _key:
+          'project-uuid-1|monitors|FORWARD:_class=Host:hostname=www.feroot.com',
         _type: 'feroot_project_monitors_host',
       },
       {
         _class: 'MONITORS',
         _mapping: {
           relationshipDirection: 'FORWARD',
-          sourceEntityKey: 'uuid-2',
+          sourceEntityKey: 'project-uuid-2',
           targetFilterKeys: [['_class', 'hostname']],
           targetEntity: {
             _class: 'Host',
@@ -113,23 +114,24 @@ describe('Projects fetching', () => {
           skipTargetCreation: true,
         },
         displayName: 'MONITORS',
-        _key: 'uuid-2|monitors|FORWARD:_class=Host:hostname=www.google.com',
+        _key:
+          'project-uuid-2|monitors|FORWARD:_class=Host:hostname=www.google.com',
         _type: 'feroot_project_monitors_host',
       },
       {
-        _key: 'uuid-g1|has|uuid-2',
+        _key: 'group-uuid-1|has|project-uuid-2',
         _type: 'feroot_project_folder_has_project',
         _class: 'HAS',
-        _fromEntityKey: 'uuid-g1',
-        _toEntityKey: 'uuid-2',
+        _fromEntityKey: 'group-uuid-1',
+        _toEntityKey: 'project-uuid-2',
         displayName: 'HAS',
       },
       {
-        _key: 'uuid-2|contains|pg:pg-uuid-1',
+        _key: 'project-uuid-2|contains|pg:pageguard-uuid-1',
         _type: 'feroot_project_contains_pageguard_project',
         _class: 'CONTAINS',
-        _fromEntityKey: 'uuid-2',
-        _toEntityKey: 'pg:pg-uuid-1',
+        _fromEntityKey: 'project-uuid-2',
+        _toEntityKey: 'pg:pageguard-uuid-1',
         displayName: 'CONTAINS',
       },
     ]);
@@ -140,10 +142,10 @@ describe('Projects fetching', () => {
       {
         id: 'abc',
         name: 'name-1',
-        serviceUuid: 'service-1',
+        serviceUuid: 'service-uuid-1',
         status: 1,
         urls: ['https://www.feroot.com'],
-        uuid: 'uuid-1',
+        uuid: 'project-uuid-1',
       },
     ];
 
@@ -168,7 +170,7 @@ describe('Projects fetching', () => {
         _class: 'MONITORS',
         _mapping: {
           relationshipDirection: 'FORWARD',
-          sourceEntityKey: 'uuid-1',
+          sourceEntityKey: 'project-uuid-1',
           targetFilterKeys: [['_class', 'hostname']],
           targetEntity: {
             _class: 'Host',
@@ -179,7 +181,8 @@ describe('Projects fetching', () => {
           skipTargetCreation: false,
         },
         displayName: 'MONITORS',
-        _key: 'uuid-1|monitors|FORWARD:_class=Host:hostname=www.feroot.com',
+        _key:
+          'project-uuid-1|monitors|FORWARD:_class=Host:hostname=www.feroot.com',
         _type: 'feroot_project_monitors_host',
       },
     ]);
