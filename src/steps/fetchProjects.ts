@@ -56,7 +56,6 @@ const step: IntegrationStep<IntegrationConfig> = {
   types: [
     'feroot_project',
     'feroot_project_folder_has_project',
-    'feroot_project_monitors_host',
     'feroot_project_contains_pageguard_project',
     'web_app_domain',
     'feroot_project_monitors_web_app_domain',
