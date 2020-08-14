@@ -3,7 +3,8 @@ import {
   IntegrationStepExecutionContext,
   createIntegrationEntity,
   createIntegrationRelationship,
-  RelationshipDirection,
+  JobState,
+  Entity,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../types';
@@ -22,6 +23,33 @@ function convertProjectStatus(status: number): string {
   return 'Unknown';
 }
 
+async function getDomainEntity(
+  domain: string,
+  jobState: JobState,
+): Promise<Entity> {
+  let domainEntityKey = `web-app-domain:${domain}`;
+  let domainEntity = await jobState.getData<Entity>(domainEntityKey);
+  if (!domainEntity) {
+    domainEntity = await jobState.addEntity(
+      createIntegrationEntity({
+        entityData: {
+          source: {
+            name: domain,
+          },
+          assign: {
+            _key: domainEntityKey,
+            _type: 'web_app_domain',
+            _class: ['Application'],
+            displayName: domain,
+          },
+        },
+      }),
+    );
+    await jobState.setData(domainEntityKey, domainEntity);
+  }
+  return domainEntity;
+}
+
 const step: IntegrationStep<IntegrationConfig> = {
   id: 'fetch-projects',
   name: 'Fetch Projects',
@@ -29,7 +57,9 @@ const step: IntegrationStep<IntegrationConfig> = {
     'feroot_project',
     'feroot_project_folder_has_project',
     'feroot_project_monitors_host',
-    'feroot_project_includes_pageguard_project',
+    'feroot_project_contains_pageguard_project',
+    'web_app_domain',
+    'feroot_project_monitors_web_app_domain',
   ],
   async executionHandler({
     instance,
@@ -55,23 +85,15 @@ const step: IntegrationStep<IntegrationConfig> = {
         }),
       );
 
-      let hostname = URI(project.urls[0]).host();
+      let domain = new URI(project.urls[0]).domain(); // all urls in a project share the same domain
+      let domainEntity = await getDomainEntity(domain, jobState);
       await jobState.addRelationship(
         createIntegrationRelationship({
           _class: 'MONITORS',
-          _mapping: {
-            relationshipDirection: RelationshipDirection.FORWARD,
-            sourceEntityType: 'feroot_project',
-            sourceEntityKey: project.uuid,
-            targetFilterKeys: [['_class', 'hostname']],
-            targetEntity: {
-              _class: 'Host',
-              _type: 'host',
-              hostname: hostname,
-              displayName: hostname,
-            },
-            skipTargetCreation: !instance.config.createTargetHosts,
-          },
+          fromKey: project.uuid,
+          fromType: 'feroot_project',
+          toKey: domainEntity._key,
+          toType: domainEntity._type,
         }),
       );
 

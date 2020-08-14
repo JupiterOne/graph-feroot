@@ -5,9 +5,6 @@ const instanceConfigFields: IntegrationInstanceConfigFieldMap = {
     type: 'string',
     mask: true,
   },
-  createTargetHosts: {
-    type: 'boolean',
-  },
   includeResolvedAlerts: {
     type: 'boolean',
   },

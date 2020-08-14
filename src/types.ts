@@ -11,11 +11,6 @@ export interface IntegrationConfig extends IntegrationInstanceConfig {
   ferootApiKey: string;
 
   /**
-   * Indicates whether monitoring hosts should be created if not present in J1 workspace
-   */
-  createTargetHosts?: boolean;
-
-  /**
    * Indicates whether to preserve entities for resolved alerts or to remove all resolved alerts
    * from the graph
    */
