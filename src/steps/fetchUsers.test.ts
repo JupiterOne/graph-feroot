@@ -16,7 +16,7 @@ describe('User Groups fetching', () => {
         phone: '123',
         roles: ['admin', 'owner'],
         userGroups: [],
-        uuid: 'uuid-1',
+        uuid: 'user-uuid-1',
       },
       {
         id: 'abc-2',
@@ -25,8 +25,8 @@ describe('User Groups fetching', () => {
         lastName: 'Smith',
         phone: '',
         roles: [],
-        userGroups: ['uuid-g1', 'uuid-g2'],
-        uuid: 'uuid-2',
+        userGroups: ['usergroup-uuid-1', 'usergroup-uuid-2'],
+        uuid: 'user-uuid-2',
       },
     ];
 
@@ -46,7 +46,7 @@ describe('User Groups fetching', () => {
         email: 'user@gmail.com',
         _type: 'feroot_user',
         _class: ['User'],
-        _key: 'uuid-1',
+        _key: 'user-uuid-1',
         displayName: 'John Doe',
         name: 'user@gmail.com',
         username: 'user@gmail.com',
@@ -62,7 +62,7 @@ describe('User Groups fetching', () => {
         email: 'user2@gmail.com',
         _type: 'feroot_user',
         _class: ['User'],
-        _key: 'uuid-2',
+        _key: 'user-uuid-2',
         displayName: 'Daniel Smith',
         name: 'user2@gmail.com',
         username: 'user2@gmail.com',
@@ -77,19 +77,19 @@ describe('User Groups fetching', () => {
 
     expect(context.jobState.collectedRelationships).toMatchObject([
       {
-        _key: 'uuid-g1|has|uuid-2',
+        _key: 'usergroup-uuid-1|has|user-uuid-2',
         _type: 'feroot_user_group_has_user',
         _class: 'HAS',
-        _fromEntityKey: 'uuid-g1',
-        _toEntityKey: 'uuid-2',
+        _fromEntityKey: 'usergroup-uuid-1',
+        _toEntityKey: 'user-uuid-2',
         displayName: 'HAS',
       },
       {
-        _key: 'uuid-g2|has|uuid-2',
+        _key: 'usergroup-uuid-2|has|user-uuid-2',
         _type: 'feroot_user_group_has_user',
         _class: 'HAS',
-        _fromEntityKey: 'uuid-g2',
-        _toEntityKey: 'uuid-2',
+        _fromEntityKey: 'usergroup-uuid-2',
+        _toEntityKey: 'user-uuid-2',
         displayName: 'HAS',
       },
     ]);

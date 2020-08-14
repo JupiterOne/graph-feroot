@@ -11,14 +11,14 @@ describe('Project Folders fetching', () => {
       {
         id: 'abc',
         name: 'name-1',
-        uuid: 'uuid-1',
+        uuid: 'folder-uuid-1',
         userGroups: [],
       },
       {
         id: 'abc-2',
         name: 'name-2',
-        uuid: 'uuid-2',
-        userGroups: ['uuid-g1', 'uuid-g2'],
+        uuid: 'folder-uuid-2',
+        userGroups: ['group-uuid-1', 'group-uuid-2'],
       },
     ];
 
@@ -38,7 +38,7 @@ describe('Project Folders fetching', () => {
         name: 'name-1',
         _type: 'feroot_project_folder',
         _class: ['Group'],
-        _key: 'uuid-1',
+        _key: 'folder-uuid-1',
         displayName: 'name-1',
         _rawData: [
           {
@@ -52,7 +52,7 @@ describe('Project Folders fetching', () => {
         name: 'name-2',
         _type: 'feroot_project_folder',
         _class: ['Group'],
-        _key: 'uuid-2',
+        _key: 'folder-uuid-2',
         displayName: 'name-2',
         _rawData: [
           {
@@ -64,19 +64,19 @@ describe('Project Folders fetching', () => {
     ]);
     expect(context.jobState.collectedRelationships).toMatchObject([
       {
-        _key: 'uuid-g1|has|uuid-2',
+        _key: 'group-uuid-1|has|folder-uuid-2',
         _type: 'feroot_user_group_has_project_folder',
         _class: 'HAS',
-        _fromEntityKey: 'uuid-g1',
-        _toEntityKey: 'uuid-2',
+        _fromEntityKey: 'group-uuid-1',
+        _toEntityKey: 'folder-uuid-2',
         displayName: 'HAS',
       },
       {
-        _key: 'uuid-g2|has|uuid-2',
+        _key: 'group-uuid-2|has|folder-uuid-2',
         _type: 'feroot_user_group_has_project_folder',
         _class: 'HAS',
-        _fromEntityKey: 'uuid-g2',
-        _toEntityKey: 'uuid-2',
+        _fromEntityKey: 'group-uuid-2',
+        _toEntityKey: 'folder-uuid-2',
         displayName: 'HAS',
       },
     ]);

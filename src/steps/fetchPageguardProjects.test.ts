@@ -11,13 +11,13 @@ describe('PageGuard Projects fetching', () => {
       {
         id: 'abc',
         name: 'name-1',
-        uuid: 'uuid-1',
+        uuid: 'project-uuid-1',
         activatedAt: 1597167323436,
       },
       {
         id: 'abc-2',
         name: 'name-2',
-        uuid: 'uuid-2',
+        uuid: 'project-uuid-2',
         activatedAt: 1597166323436,
       },
     ];
@@ -38,7 +38,7 @@ describe('PageGuard Projects fetching', () => {
         name: 'name-1',
         _type: 'feroot_pageguard_project',
         _class: ['Project'],
-        _key: 'pg:uuid-1',
+        _key: 'pg:project-uuid-1',
         displayName: 'name-1',
         activatedAt: 1597167323436,
         active: true,
@@ -54,7 +54,7 @@ describe('PageGuard Projects fetching', () => {
         name: 'name-2',
         _type: 'feroot_pageguard_project',
         _class: ['Project'],
-        _key: 'pg:uuid-2',
+        _key: 'pg:project-uuid-2',
         displayName: 'name-2',
         activatedAt: 1597166323436,
         active: true,

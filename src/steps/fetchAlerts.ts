@@ -26,8 +26,9 @@ const step: IntegrationStep<IntegrationConfig> = {
               source: alert,
               assign: {
                 _type: 'feroot_alert',
-                _class: 'Incident',
+                _class: 'Finding',
                 _key: alert.id,
+                id: alert.id,
                 name: alert.alertType || 'unknown-alert',
                 category: 'Feroot Alert',
                 severity: 'major',
@@ -35,7 +36,7 @@ const step: IntegrationStep<IntegrationConfig> = {
 
                 displayName: alert.title,
                 eventsCount: alert.eventsCount,
-                active: alert.state === 1,
+                open: alert.state === 1,
               },
             },
           }),
