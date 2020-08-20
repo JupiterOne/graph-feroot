@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2020-08-20 - 1.0.3
+
+### Fixed
+
+- Build package name.
+
 ## 2020-08-20 - 1.0.2
 
 ### Fixed
