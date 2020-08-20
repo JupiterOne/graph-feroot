@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2020-08-19 - 1.0.1
+
+### Fixed
+
+- Removed `test/helpers` from build output.
+
 ## 2020-08-19 - 1.0.0
 
 First release of integration.
