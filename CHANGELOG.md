@@ -8,6 +8,12 @@ and this project adheres to
 
 ## [Unreleased]
 
+## 2020-08-20 - 1.0.2
+
+### Fixed
+
+- Build publish step failure.
+
 ## 2020-08-19 - 1.0.1
 
 ### Fixed
