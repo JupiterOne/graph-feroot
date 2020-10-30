@@ -2,16 +2,19 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createIntegrationEntity,
-  createIntegrationRelationship,
+  createDirectRelationship,
+  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
+import { Steps, Entities, Relationships } from '../constants';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-project-folders',
+  id: Steps.PROJECT_FOLDERS,
   name: 'Fetch ProjectFolders',
-  types: ['feroot_project_folder', 'feroot_user_group_has_project_folder'],
+  entities: [Entities.PROJECT_FOLDER],
+  relationships: [Relationships.GROUP_HAS_PROJECT_FOLDER],
   async executionHandler({
     instance,
     jobState,
@@ -24,8 +27,8 @@ const step: IntegrationStep<IntegrationConfig> = {
           entityData: {
             source: folder,
             assign: {
-              _type: 'feroot_project_folder',
-              _class: 'Group',
+              _type: Entities.PROJECT_FOLDER._type,
+              _class: Entities.PROJECT_FOLDER._class,
               _key: folder.uuid,
               displayName: folder.name,
             },
@@ -35,12 +38,12 @@ const step: IntegrationStep<IntegrationConfig> = {
 
       for (let userGroup of folder.userGroups || []) {
         await jobState.addRelationship(
-          createIntegrationRelationship({
-            _class: 'HAS',
+          createDirectRelationship({
+            _class: RelationshipClass.HAS,
             fromKey: userGroup,
-            fromType: 'feroot_user_group',
+            fromType: Entities.GROUP._type,
             toKey: folder.uuid,
-            toType: 'feroot_project_folder',
+            toType: Entities.PROJECT_FOLDER._type,
           }),
         );
       }

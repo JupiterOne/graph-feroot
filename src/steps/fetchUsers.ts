@@ -2,16 +2,19 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createIntegrationEntity,
-  createIntegrationRelationship,
+  createDirectRelationship,
+  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
+import { Entities, Steps, Relationships } from '../constants';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-users',
+  id: Steps.USERS,
   name: 'Fetch Users',
-  types: ['feroot_user', 'feroot_user_group_has_user'],
+  entities: [Entities.USER],
+  relationships: [Relationships.GROUP_HAS_USER],
   async executionHandler({
     instance,
     jobState,
@@ -24,8 +27,8 @@ const step: IntegrationStep<IntegrationConfig> = {
           entityData: {
             source: user,
             assign: {
-              _type: 'feroot_user',
-              _class: 'User',
+              _type: Entities.USER._type,
+              _class: Entities.USER._class,
               _key: user.uuid,
               displayName: `${user.firstName} ${user.lastName}`,
               name: user.email,
@@ -37,12 +40,12 @@ const step: IntegrationStep<IntegrationConfig> = {
 
       for (let userGroup of user.userGroups) {
         await jobState.addRelationship(
-          createIntegrationRelationship({
-            _class: 'HAS',
+          createDirectRelationship({
+            _class: RelationshipClass.HAS,
             fromKey: userGroup,
-            fromType: 'feroot_user_group',
+            fromType: Entities.GROUP._type,
             toKey: user.uuid,
-            toType: 'feroot_user',
+            toType: Entities.USER._type,
           }),
         );
       }

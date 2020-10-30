@@ -2,14 +2,16 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createIntegrationEntity,
-  createIntegrationRelationship,
+  createDirectRelationship,
   JobState,
   Entity,
+  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
 import URI from 'urijs';
+import { Entities, Relationships, Steps } from '../constants';
 
 function convertProjectStatus(status: number): string {
   switch (status) {
@@ -38,8 +40,8 @@ async function getDomainEntity(
           },
           assign: {
             _key: domainEntityKey,
-            _type: 'web_app_domain',
-            _class: ['Application'],
+            _type: Entities.DOMAIN._type,
+            _class: Entities.DOMAIN._class,
             displayName: domain,
           },
         },
@@ -51,14 +53,13 @@ async function getDomainEntity(
 }
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-projects',
+  id: Steps.PROJECTS,
   name: 'Fetch Projects',
-  types: [
-    'feroot_project',
-    'feroot_project_folder_has_project',
-    'feroot_project_contains_pageguard_project',
-    'web_app_domain',
-    'feroot_project_monitors_web_app_domain',
+  entities: [Entities.PROJECT, Entities.DOMAIN],
+  relationships: [
+    Relationships.PROJECT_MONITORS_DOMAIN,
+    Relationships.PROJECT_FOLDER_HAS_PROJECT,
+    Relationships.PROJECT_CONTAINS_PAGEGUARD_PROJECT,
   ],
   async executionHandler({
     instance,
@@ -72,8 +73,8 @@ const step: IntegrationStep<IntegrationConfig> = {
           entityData: {
             source: project,
             assign: {
-              _type: 'feroot_project',
-              _class: 'Project',
+              _type: Entities.PROJECT._type,
+              _class: Entities.PROJECT._class,
               _key: project.uuid,
               displayName: project.name,
               status: convertProjectStatus(project.status),
@@ -87,35 +88,35 @@ const step: IntegrationStep<IntegrationConfig> = {
       let domain = new URI(project.urls[0]).domain(); // all urls in a project share the same domain
       let domainEntity = await getDomainEntity(domain, jobState);
       await jobState.addRelationship(
-        createIntegrationRelationship({
-          _class: 'MONITORS',
+        createDirectRelationship({
+          _class: RelationshipClass.MONITORS,
           fromKey: project.uuid,
-          fromType: 'feroot_project',
+          fromType: Entities.PROJECT._type,
           toKey: domainEntity._key,
-          toType: domainEntity._type,
+          toType: Entities.DOMAIN._type,
         }),
       );
 
       if (project.projectGroup) {
         await jobState.addRelationship(
-          createIntegrationRelationship({
-            _class: 'HAS',
+          createDirectRelationship({
+            _class: RelationshipClass.HAS,
             fromKey: project.projectGroup,
-            fromType: 'feroot_project_folder',
+            fromType: Entities.PROJECT_FOLDER._type,
             toKey: project.uuid,
-            toType: 'feroot_project',
+            toType: Entities.PROJECT._type,
           }),
         );
       }
 
       if (project.pageguardUuid) {
         await jobState.addRelationship(
-          createIntegrationRelationship({
-            _class: 'CONTAINS',
+          createDirectRelationship({
+            _class: RelationshipClass.CONTAINS,
             fromKey: project.uuid,
-            fromType: 'feroot_project',
+            fromType: Entities.PROJECT._type,
             toKey: `pg:${project.pageguardUuid}`,
-            toType: 'feroot_pageguard_project',
+            toType: Entities.PAGEGUARD_PROJECT._type,
           }),
         );
       }

@@ -1,6 +1,6 @@
 {
   "name": "@jupiterone/graph-feroot",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "A JupiterOne Integration",
   "license": "MPL-2.0",
   "main": "dist/index.js",
@@ -17,6 +17,7 @@
   "scripts": {
     "start": "j1-integration collect",
     "graph": "j1-integration visualize",
+    "document": "j1-integration document",
     "lint": "eslint . --cache --fix --ext .ts,.tsx",
     "format": "prettier --write '**/*.{ts,js,json,css,md,yml}'",
     "type-check": "tsc",
@@ -27,12 +28,12 @@
     "prepack": "yarn build"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^2.10.0"
+    "@jupiterone/integration-sdk-core": "^4.0.0"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^2.10.0",
-    "@jupiterone/integration-sdk-dev-tools": "^2.10.0",
-    "@jupiterone/integration-sdk-testing": "^2.10.0"
+    "@jupiterone/integration-sdk-core": "^4.0.0",
+    "@jupiterone/integration-sdk-dev-tools": "^4.0.0",
+    "@jupiterone/integration-sdk-testing": "^4.0.0"
   },
   "dependencies": {
     "@types/request-promise-native": "^1.0.17",
