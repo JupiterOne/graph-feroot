@@ -6,11 +6,13 @@ import {
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
+import { Steps, Entities } from '../constants';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-user-groups',
+  id: Steps.GROUPS,
   name: 'Fetch UserGroups',
-  types: ['feroot_user_group'],
+  entities: [Entities.GROUP],
+  relationships: [],
   async executionHandler({
     instance,
     jobState,
@@ -23,8 +25,8 @@ const step: IntegrationStep<IntegrationConfig> = {
           entityData: {
             source: group,
             assign: {
-              _type: 'feroot_user_group',
-              _class: 'UserGroup',
+              _type: Entities.GROUP._type,
+              _class: Entities.GROUP._class,
               _key: group.uuid,
               displayName: group.name,
             },

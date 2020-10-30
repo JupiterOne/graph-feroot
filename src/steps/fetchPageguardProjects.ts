@@ -6,11 +6,13 @@ import {
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
+import { Steps, Entities } from '../constants';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-pageguard-projects',
+  id: Steps.PAGEGUARD_PROJECTS,
   name: 'Fetch Pageguard Projects',
-  types: ['feroot_pageguard_project'],
+  entities: [Entities.PAGEGUARD_PROJECT],
+  relationships: [],
   async executionHandler({
     instance,
     jobState,
@@ -23,8 +25,8 @@ const step: IntegrationStep<IntegrationConfig> = {
           entityData: {
             source: project,
             assign: {
-              _type: 'feroot_pageguard_project',
-              _class: 'Project',
+              _type: Entities.PAGEGUARD_PROJECT._type,
+              _class: Entities.PAGEGUARD_PROJECT._class,
               _key: `pg:${project.uuid}`,
               displayName: project.name,
               activatedAt: project.activatedAt,

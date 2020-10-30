@@ -2,16 +2,19 @@ import {
   IntegrationStep,
   IntegrationStepExecutionContext,
   createIntegrationEntity,
-  createIntegrationRelationship,
+  createDirectRelationship,
+  RelationshipClass,
 } from '@jupiterone/integration-sdk-core';
 
 import { IntegrationConfig } from '../types';
 import { createAPIClient } from '../client';
+import { Steps, Entities, Relationships } from '../constants';
 
 const step: IntegrationStep<IntegrationConfig> = {
-  id: 'fetch-alerts',
+  id: Steps.ALERTS,
   name: 'Fetch Alerts',
-  types: ['feroot_alert', 'feroot_project_generated_alert'],
+  entities: [Entities.ALERT],
+  relationships: [Relationships.PROJECT_GENERATED_ALERT],
   async executionHandler({
     instance,
     jobState,
@@ -25,8 +28,8 @@ const step: IntegrationStep<IntegrationConfig> = {
             entityData: {
               source: alert,
               assign: {
-                _type: 'feroot_alert',
-                _class: 'Finding',
+                _type: Entities.ALERT._type,
+                _class: Entities.ALERT._class,
                 _key: alert.id,
                 id: alert.id,
                 name: alert.alertType || 'unknown-alert',
@@ -42,12 +45,12 @@ const step: IntegrationStep<IntegrationConfig> = {
           }),
         );
         await jobState.addRelationship(
-          createIntegrationRelationship({
-            _class: 'GENERATED',
+          createDirectRelationship({
+            _class: RelationshipClass.GENERATED,
             fromKey: alert.projectUuid,
-            fromType: 'feroot_project',
+            fromType: Entities.PROJECT._type,
             toKey: alert.id,
-            toType: 'feroot_alert',
+            toType: Entities.ALERT._type,
           }),
         );
       },
